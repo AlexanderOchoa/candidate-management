@@ -1,0 +1,492 @@
+openapi: 3.0.3
+info:
+  title: candidate-management
+  description: Candidate management
+  version: 1.3.0
+externalDocs:
+  description: Más información
+  url: https://github.com/AlexanderOchoa
+servers:
+  - url: https://www.test.pe/api/v1
+    description: La url es referencial.
+paths:
+  /security/login:
+    post:
+      tags:
+        - Security
+      summary: Autenticate.
+      description: |
+        Auth to the system.
+      operationId: login
+      requestBody:
+        required: true
+        description: Request to auth to the system.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Datos no válidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '404':
+          description: Recurso inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse404'
+        '500':
+          description: Error inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
+  /candidates:
+    post:
+      tags:
+        - Candidate
+      summary: Create candidate.
+      description: |
+        This method will allow you to register a candidate.
+      operationId: create
+      requestBody:
+        required: true
+        description: Request required to create a candidate.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCandidateRequest'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCandidateResponse'
+        '400':
+          description: Datos no válidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '404':
+          description: Recurso inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse404'
+        '500':
+          description: Error inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
+    put:
+      tags:
+        - Candidate
+      summary: Update candidate.
+      description: |
+        This method will allow you to update a candidate.
+      operationId: udpate
+      requestBody:
+        required: true
+        description: Request required to update a candidate.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCandidateRequest'
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCandidateResponse'
+        '400':
+          description: Datos no válidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '404':
+          description: Recurso inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse404'
+        '500':
+          description: Error inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
+    get:
+      tags:
+        - Candidate
+      summary: List candidate.
+      description: |
+        This method will allow you to list candidates.
+      operationId: list
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListCandidateResponse'
+        '400':
+          description: Datos no válidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '404':
+          description: Recurso inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse404'
+        '500':
+          description: Error inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
+  /candidates/{id}:
+    get:
+      tags:
+        - Candidate
+      summary: Get candidate.
+      description: |
+        This method will allow you to get a candidate.
+      operationId: get
+      parameters:
+        - name: id
+          in: path
+          description: "id of candidate <br> formato: numeric"
+          required: true
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCandidateResponse'
+        '400':
+          description: Datos no válidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '404':
+          description: Recurso inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse404'
+        '500':
+          description: Error inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
+    delete:
+      tags:
+        - Candidate
+      summary: Delete candidate.
+      description: |
+        This method will allow you to delete candidate.
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          description: "id of taks <br> formato: numeric"
+          required: true
+          schema:
+            type: number
+            example: 123
+      responses:
+        '200':
+          description: Operación exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteCandidateResponse'
+        '400':
+          description: Datos no válidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '404':
+          description: Recurso inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse404'
+        '500':
+          description: Error inesperado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      description: "request to auth to the system"
+      properties:
+        username:
+          type: string
+          description: "descripción: username <br> formato: any"
+          example: 'alexander@gmail.com'
+        password:
+          type: string
+          description: "descripción: código de registro EPI <br> formato: 0368964"
+          example: 'dsdsd32323'
+    LoginResponse:
+      type: object
+      description: "Response to the auth to the system"
+      properties:
+        data:
+          $ref: '#/components/schemas/LoginDataResponse'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    LoginDataResponse:
+      type: object
+      description: "Datos de respuesta del registro de la cuenta corriente"
+      properties:
+        Token:
+          type: string
+          description: "description: token jwt to access to the system <br> formato: string"
+          example: 'dsdsdsewew3232323...'
+    CreateCandidateRequest:
+      type: object
+      description: "request to create candidate"
+      properties:
+        name:
+          type: string
+          description: "description: name <br> formato: string"
+          example: 'task 1'
+        email:
+          type: string
+          description: "description: email <br> formato: string"
+          example: 'candidate@gmail.com'
+        gender:
+          type: string
+          description: "description: gender <br> formato: string"
+          example: 'male'
+        salaryExpected:
+          type: number
+          description: "description: salary expected <br> formato: numeric"
+          example: 7000.00
+    CreateCandidateResponse:
+      type: object
+      description: "Response to create candidate"
+      properties:
+        data:
+          $ref: '#/components/schemas/CreateCandidateDataResponse'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    CreateCandidateDataResponse:
+      type: object
+      description: "response of create candidate"
+      properties:
+        id:
+          type: integer
+          description: "description: id candidate <br> formato: numeric"
+          example: 123
+    UpdateCandidateRequest:
+      type: object
+      description: "Response to update candidate"
+      properties:
+        id:
+          type: integer
+          description: "description: id candidate <br> formato: numeric"
+          example: 123
+        name:
+          type: string
+          description: "description: name <br> formato: string"
+          example: 'task 1'
+        email:
+          type: string
+          description: "description: email <br> formato: string"
+          example: 'candidate@gmail.com'
+        gender:
+          type: string
+          description: "description: gender <br> formato: string"
+          example: 'male'
+        salaryExpected:
+          type: number
+          description: "description: salary expected <br> formato: numeric"
+          example: 7000.00
+    UpdateCandidateResponse:
+      type: object
+      description: "Response to create candidate"
+      properties:
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    GetCandidateResponse:
+      type: object
+      description: "Response to create candidate"
+      properties:
+        data:
+          $ref: '#/components/schemas/GetCandidateDataResponse'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    GetCandidateDataResponse:
+      type: object
+      description: "Response to get candidate"
+      properties:
+        id:
+          type: integer
+          description: "description: id candidate <br> formato: numeric"
+          example: 123
+        name:
+          type: string
+          description: "description: name <br> formato: string"
+          example: 'task 1'
+        email:
+          type: string
+          description: "description: email <br> formato: string"
+          example: 'candidate@gmail.com'
+        gender:
+          type: string
+          description: "description: gender <br> formato: string"
+          example: 'male'
+        salaryExpected:
+          type: number
+          description: "description: salary expected <br> formato: numeric"
+          example: 7000.00
+        status:
+          type: string
+          description: "descripción: status <br> formato: string"
+          example: 'created'
+    DeleteCandidateResponse:
+      type: object
+      description: "Response to delete candidate"
+      properties:
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    ListCandidateResponse:
+      type: object
+      description: "Response to create candidate"
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListCandidateDataResponse'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    ListCandidateDataResponse:
+      type: object
+      description: "Response to get candidate"
+      properties:
+        id:
+          type: integer
+          description: "description: id candidate <br> formato: numeric"
+          example: 123
+        name:
+          type: string
+          description: "description: name <br> formato: string"
+          example: 'task 1'
+        email:
+          type: string
+          description: "description: email <br> formato: string"
+          example: 'candidate@gmail.com'
+        gender:
+          type: string
+          description: "description: gender <br> formato: string"
+          example: 'male'
+        salaryExpected:
+          type: number
+          description: "description: salary expected <br> formato: numeric"
+          example: 7000.00
+        status:
+          type: string
+          description: "descripción: status <br> formato: string"
+          example: 'created'
+    Metadata:
+      type: object
+      description: "Indica que la solicitud ha tenido éxito"
+      properties:
+        status:
+          type: integer
+          description: "descripción: códigos de estado de respuesta HTTP  <br> formato: numerico"
+          format: int32
+          example: 200
+        message:
+          type: string
+          description: "descripción: mensaje si el proceso fue exitoso  <br> formato: libre"
+          example: La operación fue exitosa.
+    ApiResponse400:
+      type: object
+      description: "Respuesta que el servidor no pudo interpretar la solicitud dada una sintaxis inválida"
+      properties:
+        metadata:
+          $ref: '#/components/schemas/ApiDataResponse400'
+    ApiDataResponse400:
+      type: object
+      description: "Respuesta que el servidor no pudo interpretar la solicitud dada una sintaxis inválida"
+      properties:
+        status:
+          type: integer
+          description: "descripción: códigos de estado de respuesta HTTP  <br> formato: numerico"
+          format: int32
+          example: 400
+        message:
+          type: string
+          description: "descripción: mensaje de respuesta HTTP  <br> formato: libre"
+          example: Los datos ingresados son inválidos.
+    ApiResponse404:
+      type: object
+      description: "La petición se ha completado con éxito pero su respuesta no tiene ningún contenido"
+      properties:
+        metadata:
+          $ref: '#/components/schemas/ApiDataResponse404'
+    ApiDataResponse404:
+      type: object
+      description: "La petición se ha completado con éxito pero su respuesta no tiene ningún contenido"
+      properties:
+        status:
+          type: integer
+          description: "descripción: códigos de estado de respuesta HTTP  <br> formato: numerico"
+          format: int32
+          example: 404
+        message:
+          type: string
+          description: "descripción: mensaje de respuesta HTTP  <br> formato: libre"
+          example: No se encontró contenido.
+    ApiResponse500:
+      type: object
+      description: "El servidor ha encontrado una situación que no sabe cómo manejarla"
+      properties:
+        metadata:
+          $ref: '#/components/schemas/ApiDataResponse500'
+    ApiDataResponse500:
+      type: object
+      description: "El servidor ha encontrado una situación que no sabe cómo manejarla"
+      properties:
+        status:
+          type: integer
+          description: "descripción: códigos de estado de respuesta HTTP  <br> formato: numerico"
+          format: int32
+          example: 500
+        message:
+          type: string
+          description: "descripción: mensaje de respuesta HTTP  <br> formato: libre"
+          example: >-
+            Ocurrió un error no esperado, por favor comuníquese con el área de
+            soporte.

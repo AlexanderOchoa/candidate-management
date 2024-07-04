@@ -1,0 +1,2 @@
+INSERT INTO user (name, username, password) VALUES ('Alexander', 'alexander@gmail.com', '$2a$10$taaIeZRF2IV4tCgwOHkYpe.TPwLltLjw.CEAOpeRkjLChlLXbZxp6');
+INSERT INTO candidate (name, email, gender, salaryExpected, status) VALUES ('Alex', 'alex@gmail.com', 'male', 8000, 'created');
